@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>動画再生</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<style>
+* {
+	/*CSS3*/
+	user-select: none;
+	/*Firefoxでアクセスしてきている人用*/
+	-moz-user-select: none;
+	/*Safari等でアクセスしてきている人用*/
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+}
+</style>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+<script src="./rakugoplay.js"></script>
+
+</head>
+<body>
+	<!-- <input type="text" id="query" size="50" placeholder="検索ワードを入力してね" /> -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div>
+					<h2 align="center">
+						<b id="title">題名</b>
+					</h2>
+				</div>
+				<div align="center">
+					<div id="video"></div>
+				</div>
+				<div align="center">
+					<h3 id="play_state">＜停止中＞</h3>
+				</div>
+
+				<div class="row" align="center">
+					<div class="col-sm-3 col-xs-3">
+						<div class="form-group" align="center">
+							<button type="button" id="back_btn"
+								class="btn btn-large btn-primary">
+								<h3>前</h3>
+							</button>
+						</div>
+					</div>
+					<div class="col-sm-3 col-xs-3">
+						<div class="form-group" align="center">
+							<button type="button" id="start_btn"
+								class="btn btn-large btn-primary">
+								<h3>再生</h3>
+							</button>
+						</div>
+					</div>
+					<div class="col-sm-3 col-xs-3">
+						<div class="form-group" align="center">
+							<button type="button" id="stop_btn"
+								class="btn btn-large btn-primary">
+								<h3>停止</h3>
+							</button>
+						</div>
+					</div>
+					<div class="col-sm-3 col-xs-3" >
+						<div class="form-group" align="center">
+							<button type="button" id="forward_btn"
+								class="btn btn-large btn-primary">
+								<h3>次</h3>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+
+				<div align="center">
+					チャンネル
+				</div>
+
+				<form class="form-horizontal" style="margin-bottom: 15px">
+					<div class="form-group" align="center">
+						<button type="button" id="rakugo"
+							class="btn btn-large btn-primary" style="width: 90%;">
+							<h2>落語ちゃんねる</h2>
+						</button>
+					</div>
+					<div class="form-group" align="center">
+						<button type="button" id="rakusearch"
+							class="btn btn-large btn-primary" style="width: 90%;">
+							<h2>落語検索</h2>
+						</button>
+					</div>
+					<div class="form-group" align="center">
+						<button type="button" id="tbs" class="btn btn-large btn-primary"
+							style="width: 90%;">
+							<h2>ＴＢＳニュース</h2>
+						</button>
+					</div>
+					<div class="form-group" align="center">
+						<button type="button" id="ann" class="btn btn-large btn-primary"
+							style="width: 90%;">
+							<h2>テレビ朝日ニュース</h2>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+
+
+	<!-- 	<div id="video"></div> -->
+</body>
+</html>
