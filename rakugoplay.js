@@ -15,6 +15,11 @@ jQuery(function($) {
 			//height : '450',
 			//width : '800',
 			// videoIdはこの段階ではセットしていない
+			playerVars: {
+				controls: 0,
+				showinfo: 0,
+				disablekb: 1
+			},
 			events : {
 				onReady : function() {
 					// 最後まで終わったらまた最初から再生されるように
