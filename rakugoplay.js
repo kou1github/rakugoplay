@@ -16,7 +16,6 @@ jQuery(function($) {
 			//width : '800',
 			// videoIdはこの段階ではセットしていない
 			playerVars: {
-				controls: 0,
 				showinfo: 0,
 				disablekb: 1
 			},
