@@ -1,10 +1,34 @@
 //<script>
 jQuery(function($) {
 	var w = window, player;
-	
-	getScript('https://www.youtube.com/iframe_api');
-	
+
+	// 最初は隠しておく
+	// $('#video').hide();
+
+	// https://developers.google.com/youtube/iframe_api_reference
+	var tag = document.createElement('script');
+	tag.src = "//www.youtube.com/iframe_api";
 	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+	w.onYouTubeIframeAPIReady = function() {
+		player = new YT.Player('video', {
+			//height : '450',
+			//width : '800',
+			// videoIdはこの段階ではセットしていない
+                         videoId: '3SvwvPhF5yk',
+			playerVars: {
+				showinfo: 0,
+				disablekb: 1
+			},
+			events : {
+				onReady : function() {
+					// 最後まで終わったらまた最初から再生されるように
+					player.setLoop(true);
+				},
+				onStateChange: onPlayerStateChange
+			}
+		});
+	};
 	
 	$(document).bind("touchmove", function() {
 		event.preventDefault();
@@ -13,7 +37,7 @@ jQuery(function($) {
 	// ここからは動画の検索
 	$("#rakugo").click(function() {
 		// 落語ちゃんねる
-		getChannelVideos('UCMaihW8BJimpul-w3RsgZ3A');
+		cueOrderedPlaylist('channel', 'UCMaihW8BJimpul-w3RsgZ3A', player);
 	});
 	$("#rakusearch").click(function() {
 		// 落語ちゃんねる
@@ -22,11 +46,11 @@ jQuery(function($) {
 	
 	$("#tbs").click(function() {
 		// UCMaihW8BJimpul-w3RsgZ3A
-		getChannelVideos('tbsnewsi');
+		cueOrderedPlaylist('channel', 'tbsnewsi', player);
 	});
 	$("#ann").click(function() {
 		// UCMaihW8BJimpul-w3RsgZ3A
-		getChannelVideos('ANNnewsCH');
+		cueOrderedPlaylist('channel', 'ANNnewsCH', player);
 	});
 
 	$("#start_btn").click(function() {
@@ -50,7 +74,60 @@ jQuery(function($) {
 		player.nextVideo();
 	});
 });
+// </script>
+function cueOrderedPlaylist(searchtype, word, player){
 
+    // http://aws01.kou1aws.pgw.jp 用
+    var API_KEY = 'AIzaSyAMU3Oo-PoQLFWH81RchsgDbzafXC4vlKw';
+    // ドメインなし
+    // var API_KEY = 'AIzaSyDkW0ggOF1zOzvG8HOpCXyV775sxeEuC3A';
+    var API_URL = 'https://www.googleapis.com/youtube/v3/search';
+	if (searchtype == 'channel') {
+		query = {
+			url : API_URL ,
+                        part : 'id' ,
+                        type : 'GET' ,
+                        channelId : word ,
+                        order : 'date'
+		};
+	} else {
+		query = {
+			url : 'http://gdata.youtube.com/feeds/api/videos?',
+			dataType : 'jsonp',
+			data : {
+				'q' : word,
+				'alt' : 'jsonc',
+				'v' : 2,
+				'max-results' : 50,
+				'format' : 5,
+				'orderby' : "published",
+				'start-index' : 1
+			}
+		};
+	}
+	
+	
+	  $.ajax(query).done(function(data) {
+	      // 再生中の動画があれば止めて消す
+	      player.stopVideo(); 
+	      player.clearVideo(); 
+	      $('#video').fadeIn();
+	      var videos = [];
+	      videoname = [];
+	      $.each(data.data.items, function() {
+	        videos.push(this.id);
+	        videoname.push(this.title);
+	      });
+
+/*	      videos = videos.sort(function(a, b) {
+	        return b.uploaded - a.uploaded;
+	      });
+*/
+	      // ここでキューに動画のIDを突っ込むだけ
+	      player.cuePlaylist(videos);
+	    });
+	
+}
 
 function onPlayerStateChange(event) {
 	$("#title").text(videoname[event.target.getPlaylistIndex()]);
@@ -65,100 +142,4 @@ function onPlayerStateChange(event) {
 		break;
 	}
 	$("#play_state").text(state);
-}
-
-/*----------------------------------------*/
-/* Step.0 準備*/
-/*----------------------------------------*/
-//ライブラリを非同期で読み込むための関数を予め用意
-function getScript(src){
-    !(function(d,s,src){
-        var js = d.createElement(s);
-        js.src = src;
-        var fjs = d.getElementsByTagName(s)[0];
-        fjs.parentNode.insertBefore(js, fjs);
-    })(document,'script',src)
-}
-
-/*----------------------------------------*/
-/* Step.2 Google Client Libraryを利用して認証処理を行う*/
-/*----------------------------------------*/
-//APIの設定
-const APIKEY = 'AIzaSyAMU3Oo-PoQLFWH81RchsgDbzafXC4vlKw';
-//初期化実行
-function handleClientLoad(){
-    //API　Key をセット
-    gapi.client.setApiKey(APIKEY);
-    //YouTube Data API v3を読み込み
-    gapi.client.load('youtube','v3',getChannelId);
-}
-
-//iframe_apiが読み込まれたら,
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-        height: '400',
-        videoId: 'M7lc1UVf-VE',
-		events : {
-			onReady : function() {
-				// 最後まで終わったらまた最初から再生されるように
-				player.setLoop(true);
-			},
-			onStateChange: onPlayerStateChange
-		}
-        events:{
-            'onReady': onPlayerReady
-        }
-    });
-}
-
-//playerの設定が完了したら、
-function onPlayerReady(ev){
-    //client.jsを読み込む。
-    getScript('https://apis.google.com/js/client.js?onload=handleClientLoad');
-}
-
-/*----------------------------------------*/
-/* Step.3 チェンネルIDを取得する*/
-/*----------------------------------------*/
-const BASEPATH = '/youtube/v3/';
-//ユーザーIDを指定
-const userId = 'tbsnewsi';
-//チャンネル情報の取得
-function getChannelId(){
-    //チャンネルリソースを使用する。
-    var resource = 'channels';
-    //チャンネルIDだけが必要なので、partはidだけを指定
-    var params = {
-        part:'id',
-        forUsername:userId
-    }
-    //リクエスト
-    gapi.client.request({
-        path: BASEPATH+resource,
-        params: params,
-        callback: getChannelVideos
-    });
-}
-
-/*----------------------------------------*/
-/* Step.4 チャンネルの新着動画を取得する */
-/*----------------------------------------*/
-//チャンネルの動画を取得
-function getChannelVideos(response){
-    //チャンネルIDを抽出
-    var channelId = response.items[0].id;
-    //searchリソースを使用する
-    var resource = 'search';
-    var params = {
-        part:'id,snippet',
-        channelId:channelId,
-        order:'date',
-        maxResults:5
-    }
-    //リクエスト
-    gapi.client.request({
-        path: BASEPATH+resource,
-        params: params,
-        callback: setVideos
-    });
 }
