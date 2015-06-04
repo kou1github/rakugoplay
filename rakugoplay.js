@@ -80,7 +80,7 @@ function cueOrderedPlaylist(searchtype, word, player){
     // http://aws01.kou1aws.pgw.jp 用
     var API_KEY = 'AIzaSyAMU3Oo-PoQLFWH81RchsgDbzafXC4vlKw';
     // ドメインなし
-    // var API_KEY = 'AIzaSyDkW0ggOF1zOzvG8HOpCXyV775sxeEuC3A';
+    //var API_KEY = 'AIzaSyDkW0ggOF1zOzvG8HOpCXyV775sxeEuC3A';
     var API_URL = 'https://www.googleapis.com/youtube/v3/search';
 	if (searchtype == 'channel') {
             query = {
