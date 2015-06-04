@@ -83,13 +83,16 @@ function cueOrderedPlaylist(searchtype, word, player){
     // var API_KEY = 'AIzaSyDkW0ggOF1zOzvG8HOpCXyV775sxeEuC3A';
     var API_URL = 'https://www.googleapis.com/youtube/v3/search';
 	if (searchtype == 'channel') {
-		query = {
-			url : API_URL ,
-                        part : 'id' ,
-                        type : 'GET' ,
-                        channelId : word ,
-                        order : 'date'
-		};
+            query = {
+                url: API_URL,
+                dataType: 'jsonp',
+                type: 'GET',
+                data: {
+                    part: 'id',
+                    channelId: word,
+                    order: 'date'
+                }
+            };
 	} else {
 		query = {
 			url : 'http://gdata.youtube.com/feeds/api/videos?',
