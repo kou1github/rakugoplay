@@ -78,9 +78,9 @@ jQuery(function($) {
 function cueOrderedPlaylist(searchtype, word, player){
 
     // http://aws01.kou1aws.pgw.jp 用
-    var API_KEY = 'AIzaSyAMU3Oo-PoQLFWH81RchsgDbzafXC4vlKw';
+    // var API_KEY = 'AIzaSyAMU3Oo-PoQLFWH81RchsgDbzafXC4vlKw';
     // ドメインなし
-    //var API_KEY = 'AIzaSyDkW0ggOF1zOzvG8HOpCXyV775sxeEuC3A';
+    var API_KEY = 'AIzaSyDkW0ggOF1zOzvG8HOpCXyV775sxeEuC3A';
     var API_URL = 'https://www.googleapis.com/youtube/v3/search';
 	if (searchtype == 'channel') {
             query = {
@@ -88,6 +88,7 @@ function cueOrderedPlaylist(searchtype, word, player){
                 dataType: 'jsonp',
                 type: 'GET',
                 data: {
+                    key : API_KEY,
                     part: 'id',
                     channelId: word,
                     order: 'date'
@@ -117,7 +118,7 @@ function cueOrderedPlaylist(searchtype, word, player){
 	      $('#video').fadeIn();
 	      var videos = [];
 	      videoname = [];
-	      $.each(data.data.items, function() {
+	      $.each(data.items, function() {
 	        videos.push(this.id);
 	        videoname.push(this.title);
 	      });
