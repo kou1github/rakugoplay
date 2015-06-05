@@ -45,12 +45,12 @@ jQuery(function($) {
 	});
 	
 	$("#tbs").click(function() {
-		// UCMaihW8BJimpul-w3RsgZ3A
-		cueOrderedPlaylist('channel', 'tbsnewsi', player);
+		// TBSNewsi
+		cueOrderedPlaylist('channel', 'UC6AG81pAkf6Lbi_1VC5NmPA', player);
 	});
 	$("#ann").click(function() {
-		// UCMaihW8BJimpul-w3RsgZ3A
-		cueOrderedPlaylist('channel', 'ANNnewsCH', player);
+		// ANNnewsCH
+		cueOrderedPlaylist('channel', 'UCGCZAYq5Xxojl_tSXcVJhiQ', player);
 	});
 
 	$("#start_btn").click(function() {
@@ -78,9 +78,9 @@ jQuery(function($) {
 function cueOrderedPlaylist(searchtype, word, player){
 
     // http://aws01.kou1aws.pgw.jp 用
-    // var API_KEY = 'AIzaSyAMU3Oo-PoQLFWH81RchsgDbzafXC4vlKw';
+    var API_KEY = 'AIzaSyAMU3Oo-PoQLFWH81RchsgDbzafXC4vlKw';
     // ドメインなし
-    var API_KEY = 'AIzaSyDkW0ggOF1zOzvG8HOpCXyV775sxeEuC3A';
+    // var API_KEY = 'AIzaSyDkW0ggOF1zOzvG8HOpCXyV775sxeEuC3A';
     var API_URL = 'https://www.googleapis.com/youtube/v3/search';
 	if (searchtype == 'channel') {
             query = {
@@ -89,25 +89,27 @@ function cueOrderedPlaylist(searchtype, word, player){
                 type: 'GET',
                 data: {
                     key : API_KEY,
-                    part: 'id',
+                    part: 'snippet',
                     channelId: word,
+                    maxResults : 50,
+                    type : 'video',
                     order: 'date'
                 }
             };
 	} else {
-		query = {
-			url : 'http://gdata.youtube.com/feeds/api/videos?',
-			dataType : 'jsonp',
-			data : {
-				'q' : word,
-				'alt' : 'jsonc',
-				'v' : 2,
-				'max-results' : 50,
-				'format' : 5,
-				'orderby' : "published",
-				'start-index' : 1
-			}
-		};
+            query = {
+                url: API_URL,
+                dataType: 'jsonp',
+                type: 'GET',
+                data: {
+                    key : API_KEY,
+                    part: 'snippet',
+                    q : word,
+                    maxResults : 50,
+                    type : 'video',
+                    order: 'date'
+                }
+            };
 	}
 	
 	
@@ -119,8 +121,8 @@ function cueOrderedPlaylist(searchtype, word, player){
 	      var videos = [];
 	      videoname = [];
 	      $.each(data.items, function() {
-	        videos.push(this.id);
-	        videoname.push(this.title);
+	        videos.push(this.id.videoId);
+	        videoname.push(this.snippet.title);
 	      });
 
 /*	      videos = videos.sort(function(a, b) {
