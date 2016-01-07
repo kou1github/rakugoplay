@@ -49,6 +49,11 @@ jQuery(function($) {
 		cueOrderedPlaylist('channel_fab', 'UCIW83GpLM0Vk2Y5qgCFJAnA', player);
 	});
 
+	$("#rakugochoice").click(function() {
+		// 古典落語名人選
+		cueOrderedPlaylist('channel_fab', 'UCqLDf0fgL4z3W9jSONAM5Fg', player);
+	});
+
 
 	$("#tbs").click(function() {
 		// TBSNewsi
@@ -113,7 +118,7 @@ function cueOrderedPlaylist(searchtype, word, player){
 						channelId: word,
 						maxResults : 50,
 						type : 'video',
-						order: 'relevance'
+						order: 'rating'
 				}
 		};
 	} else {
