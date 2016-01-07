@@ -29,7 +29,7 @@ jQuery(function($) {
 			}
 		});
 	};
-	
+
 	$(document).bind("touchmove", function() {
 		event.preventDefault();
 	});
@@ -40,10 +40,16 @@ jQuery(function($) {
 		cueOrderedPlaylist('channel', 'UCMaihW8BJimpul-w3RsgZ3A', player);
 	});
 	$("#rakusearch").click(function() {
-		// 落語ちゃんねる
+		// 落語検索
 		cueOrderedPlaylist('search', '落語', player);
 	});
-	
+
+	$("#rakugodot").click(function() {
+		// 落語.com
+		cueOrderedPlaylist('channel_fab', 'UCIW83GpLM0Vk2Y5qgCFJAnA', player);
+	});
+
+
 	$("#tbs").click(function() {
 		// TBSNewsi
 		cueOrderedPlaylist('channel', 'UC6AG81pAkf6Lbi_1VC5NmPA', player);
@@ -59,12 +65,12 @@ jQuery(function($) {
 		console.log('player: ', player.getPlaylistIndex())
 
 	});
-	
+
 	$("#stop_btn").click(function() {
 		// 一時停止
 		player.pauseVideo();
 	});
-	
+
 	$("#back_btn").click(function() {
 		// UCMaihW8BJimpul-w3RsgZ3A
 		player.previousVideo();
@@ -96,6 +102,20 @@ function cueOrderedPlaylist(searchtype, word, player){
                     order: 'date'
                 }
             };
+	else if (searchtype == 'channel_fab')) {
+		query = {
+				url: API_URL,
+				dataType: 'jsonp',
+				type: 'GET',
+				data: {
+						key : API_KEY,
+						part: 'snippet',
+						channelId: word,
+						maxResults : 50,
+						type : 'video',
+						order: 'relevance'
+				}
+		};
 	} else {
             query = {
                 url: API_URL,
@@ -111,12 +131,12 @@ function cueOrderedPlaylist(searchtype, word, player){
                 }
             };
 	}
-	
-	
+
+
 	  $.ajax(query).done(function(data) {
 	      // 再生中の動画があれば止めて消す
-	      player.stopVideo(); 
-	      player.clearVideo(); 
+	      player.stopVideo();
+	      player.clearVideo();
 	      $('#video').fadeIn();
 	      var videos = [];
 	      videoname = [];
@@ -132,7 +152,7 @@ function cueOrderedPlaylist(searchtype, word, player){
 	      // ここでキューに動画のIDを突っ込むだけ
 	      player.cuePlaylist(videos);
 	    });
-	
+
 }
 
 function onPlayerStateChange(event) {
