@@ -102,7 +102,7 @@ function cueOrderedPlaylist(searchtype, word, player){
                     order: 'date'
                 }
             };
-	else if (searchtype == 'channel_fab')) {
+	} else if (searchtype == 'channel_fab') {
 		query = {
 				url: API_URL,
 				dataType: 'jsonp',
