@@ -55,9 +55,9 @@ jQuery(function($) {
 	});
 
 
-	$("#tbs").click(function() {
-		// TBSNewsi
-		cueOrderedPlaylist('channel', 'UC6AG81pAkf6Lbi_1VC5NmPA', player);
+	$("#jnews").click(function() {
+		// J-News
+		cueOrderedPlaylist('channel', 'UCGXaO2xIpfMKYGKETlde1LA', player);
 	});
 	$("#ann").click(function() {
 		// ANNnewsCH
