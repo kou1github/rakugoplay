@@ -118,7 +118,7 @@ function cueOrderedPlaylist(searchtype, word, player){
 						channelId: word,
 						maxResults : 50,
 						type : 'video',
-						order: 'rating'
+						order: 'viewCount'
 				}
 		};
 	} else {
