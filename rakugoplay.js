@@ -55,9 +55,9 @@ jQuery(function($) {
 	});
 
 
-	$("#jnews").click(function() {
+	$("#nhknews").click(function() {
 		// J-News
-		cueOrderedPlaylist('channel', 'UCGXaO2xIpfMKYGKETlde1LA', player);
+		cueOrderedPlaylist('channel', 'UC3yyelqRthlxxGg50tdsavA', player);
 	});
 	$("#ann").click(function() {
 		// ANNnewsCH
