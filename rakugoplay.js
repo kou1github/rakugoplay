@@ -15,7 +15,7 @@ jQuery(function($) {
 			//height : '450',
 			//width : '800',
 			// videoIdはこの段階ではセットしていない
-                         videoId: '3SvwvPhF5yk',
+                         videoId: 'MMO_Ozw9PPA',
 			playerVars: {
 				showinfo: 0,
 				disablekb: 1
