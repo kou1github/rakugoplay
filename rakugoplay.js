@@ -56,8 +56,8 @@ jQuery(function($) {
 
 
 	$("#nhknews").click(function() {
-		// J-News
-		cueOrderedPlaylist('channel', 'UC3yyelqRthlxxGg50tdsavA', player);
+		// NHK
+		cueOrderedPlaylist('channel', 'UC6RRCWlnBfGipqkZoZNsffw', player);
 	});
 	$("#ann").click(function() {
 		// ANNnewsCH
