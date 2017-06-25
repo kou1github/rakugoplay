@@ -55,9 +55,9 @@ jQuery(function($) {
 	});
 
 
-	$("#nhknews").click(function() {
-		// NHK
-		cueOrderedPlaylist('channel', 'UC6RRCWlnBfGipqkZoZNsffw', player);
+	$("#jpnnews").click(function() {
+		// 日本ニュース
+		cueOrderedPlaylist('channel', 'UChZvNZvdKuCz-4vsf1ET_fQ', player);
 	});
 	$("#ann").click(function() {
 		// ANNnewsCH
